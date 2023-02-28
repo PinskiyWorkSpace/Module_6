@@ -17,11 +17,19 @@ const createHtml = () => {
 
 const {p, input} = createHtml();
 
-input.addEventListener('blur', () => {
-  setTimeout(() => {
-    p.textContent = input.value;
-    input.value = '';
-  }, 300);
-});
+const setInput = () => {
+  p.textContent = input.value;
+  input.value = '';
+};
+
+const debounce = (callback, delay) => {
+  let timeout;
+  return () => {
+    clearTimeout(timeout);
+    timeout = setTimeout(callback, delay);
+  };
+};
+
+input.addEventListener('keyup', debounce(setInput, 1000));
 
 
